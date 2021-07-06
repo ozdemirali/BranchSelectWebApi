@@ -114,9 +114,24 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Context\BranchSelectDbContext.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107061823312_Create_Database.cs" />
+    <Compile Include="Migrations\202107061823312_Create_Database.designer.cs">
+      <DependentUpon>202107061823312_Create_Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107061827082_Edit_Database.cs" />
+    <Compile Include="Migrations\202107061827082_Edit_Database.designer.cs">
+      <DependentUpon>202107061827082_Edit_Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107061829528_Edit_BranchTable.cs" />
+    <Compile Include="Migrations\202107061829528_Edit_BranchTable.designer.cs">
+      <DependentUpon>202107061829528_Edit_BranchTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\School.cs" />
     <Compile Include="Models\Student.cs" />
@@ -136,7 +151,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Views\Test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202107061823312_Create_Database.resx">
+      <DependentUpon>202107061823312_Create_Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107061827082_Edit_Database.resx">
+      <DependentUpon>202107061827082_Edit_Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107061829528_Edit_BranchTable.resx">
+      <DependentUpon>202107061829528_Edit_BranchTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

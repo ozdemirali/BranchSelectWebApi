@@ -12,7 +12,7 @@ namespace BranchSelect.Models
         [Key]
         [Column(TypeName = "VARCHAR")]
         [StringLength(50)]
-        public String Identity { get; set; }
+        public String Id { get; set; }
         public String NameAndSurname { get; set; }
         public String ParentNameAndSurname { get; set; }
         public String Class { get; set; }
