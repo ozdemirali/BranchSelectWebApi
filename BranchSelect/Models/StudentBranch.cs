@@ -14,7 +14,6 @@ namespace BranchSelect.Models
         public String StudentId { get; set; }
         public byte FirstSelect { get; set; }
         public byte SecondSelect { get; set; }
-        public Boolean Confirmation { get; set; }
 
         public virtual Student Student { get; set; }
 

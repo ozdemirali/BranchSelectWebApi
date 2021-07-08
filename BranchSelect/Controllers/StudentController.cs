@@ -22,7 +22,7 @@ namespace BranchSelect.Controllers
                 {
                     //var data = db.Students.Find(id);
                     
-                    var student = (from s in db.Students 
+                    var student = (from s in db.Students
                                    select new
                                     {
                                         Id=s.Id,
@@ -32,6 +32,7 @@ namespace BranchSelect.Controllers
                                         Adress = s.Adress,
                                         Phone = s.Phone,
                                         Email = s.Email,
+                                        Confirmation=s.Confirmation,
 
                                     }).Where(s=>s.Id==id).FirstOrDefault();
 

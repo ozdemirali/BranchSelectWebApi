@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BranchSelect.ViewModels
 {
-    public class StudentView
+    public class StudentViewModel
     {
         public String Id { get; set; }
         public String NameAndSurname { get; set; }
