@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BranchSelect.Context
 {
-    public class BranchSelectDbContext:DbContext
+    public class BranchSelectDbContext: System.Data.Entity.DbContext
     {
         public BranchSelectDbContext():base("BranchSelectDbConnectionString")
         {
