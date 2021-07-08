@@ -15,5 +15,6 @@ namespace BranchSelect.ViewModels
         public String Phone { get; set; }
         public String Email { get; set; }
         public float Score { get; set; }
-    }
+        public Boolean Confirmation { get; set; }
+}
 }

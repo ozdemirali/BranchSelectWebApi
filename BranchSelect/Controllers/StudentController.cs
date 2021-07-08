@@ -13,15 +13,19 @@ namespace BranchSelect.Controllers
     public class StudentController : ApiController
     {
         private BranchSelectDbContext db;
+
+        /// <summary>
+        /// This Method get data from Studut Table by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(String id)
         {
-
             try
             {
                 using (db = new BranchSelectDbContext())
                 {
                     //var data = db.Students.Find(id);
-                    
                     var student = (from s in db.Students
                                    select new
                                     {
@@ -53,6 +57,43 @@ namespace BranchSelect.Controllers
             {
 
                 return NotFound();
+            }
+        }
+
+        /// <summary>
+        /// This methos update student from Student Table
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns></returns>
+        public IHttpActionResult Put(StudentViewModel student)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest("Not a valid Model");
+
+                using (db = new BranchSelectDbContext())
+                {
+                    var data = new Student();
+                    data.Id = student.Id;
+                    data.NameAndSurname = student.NameAndSurname;
+                    data.ParentNameAndSurname = student.ParentNameAndSurname;
+                    data.Phone = student.Phone;
+                    data.Score = student.Score;
+                    data.Class = student.Class;
+                    data.Adress = student.Adress;
+                    data.Email = student.Email;
+                    data.Confirmation = student.Confirmation;
+                    db.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Ok();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
