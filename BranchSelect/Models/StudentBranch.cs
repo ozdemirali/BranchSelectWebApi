@@ -13,7 +13,7 @@ namespace BranchSelect.Models
         [ForeignKey("Student")]
         public String StudentId { get; set; }
         public byte FirstSelect { get; set; }
-        public byte SecondSelect { get; set; }
+        public byte? SecondSelect { get; set; }
 
         public virtual Student Student { get; set; }
 

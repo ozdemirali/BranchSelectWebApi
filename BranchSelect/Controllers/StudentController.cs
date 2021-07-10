@@ -10,19 +10,22 @@ using System.Web.Http;
 
 namespace BranchSelect.Controllers
 {
+
     public class StudentController : ApiController
     {
         private BranchSelectDbContext db;
+
 
         /// <summary>
         /// This Method get data from Studut Table by id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>The data contains all information</returns>
         public IHttpActionResult Get(String id)
         {
             try
             {
+
                 using (db = new BranchSelectDbContext())
                 {
                     //var data = db.Students.Find(id);
@@ -36,19 +39,8 @@ namespace BranchSelect.Controllers
                                         Adress = s.Adress,
                                         Phone = s.Phone,
                                         Email = s.Email,
-                                        Confirmation=s.Confirmation,
-
                                     }).Where(s=>s.Id==id).FirstOrDefault();
-
-                    //string s = JsonConvert.SerializeObject(student, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-                    //var student = new StudentView();
-                    //student.Id = data.Id;
-                    //student.NameAndSurname = data.NameAndSurname;
-                    //student.Class = data.Class;
-                    //student.ParentNameAndSurname = data.ParentNameAndSurname;
-                    //student.Adress = data.Adress;
-                    //student.Phone = data.Phone;
-                    //student.Email = data.Email;
+                    
                     return Ok(student);
 
                 }
@@ -58,6 +50,82 @@ namespace BranchSelect.Controllers
 
                 return NotFound();
             }
+        }
+
+        /// <summary>
+        ///This method fetches all students'infromation.  
+        /// </summary>
+        /// <returns>This information contains Id,NameAndSurname,FirstChoice and Score</returns>
+        [HttpGet]
+        [Route("api/student/GetAll")]
+        public IHttpActionResult GetAll()
+        {
+            try
+            {
+                using (db = new BranchSelectDbContext())
+                {
+
+                    //var branches = db.Branches.ToList();
+                    var data = (from s in db.Students
+                                          join sb in db.StudentBranches
+                                          on s.Id equals sb.StudentId
+                                          select new
+                                          {
+                                              Id=s.Id,
+                                              NameAndSurname=s.NameAndSurname,
+                                              Score=s.Score,
+                                              FirstSelect = sb.FirstSelect,
+                                          }).ToList();
+
+                    List<StudentChoiceViewModel> studentChoices = new List<StudentChoiceViewModel>();
+                    foreach (var item in data)
+                    {
+                        studentChoices.Add(new StudentChoiceViewModel()
+                        {
+                            Id=item.Id,
+                            NameAndSurname=item.NameAndSurname,
+                            Choice=db.Branches.Where(b=>b.Id==item.FirstSelect).FirstOrDefault().Name,
+                            Score=item.Score,
+                        });
+                    }       
+
+                    return Ok(studentChoices);
+                }
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+        }
+
+
+        /// <summary>
+        ///This method get numbers  that How many Student choice branch and are there 
+        /// </summary>
+        /// <returns>finished, unfinished and total student</returns>
+        [HttpGet]
+        [Route("api/student/GetBranchSelection")]
+        public IHttpActionResult GetBranchSelection()
+        {
+            try
+            {
+                using (db = new BranchSelectDbContext())
+                {
+                    var data = new ScoreViewModel();
+                    data.Finished = db.StudentBranches.Count();
+                    data.Total = db.Students.Count();
+                    data.UnFinished = data.Total - data.Finished;
+                    return Ok(data);
+                }
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+
+           
         }
 
         /// <summary>
@@ -83,7 +151,6 @@ namespace BranchSelect.Controllers
                     data.Class = student.Class;
                     data.Adress = student.Adress;
                     data.Email = student.Email;
-                    data.Confirmation = student.Confirmation;
                     db.Entry(data).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
@@ -93,7 +160,7 @@ namespace BranchSelect.Controllers
             catch (Exception)
             {
 
-                throw;
+                return NotFound();
             }
         }
     }

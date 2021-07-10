@@ -136,6 +136,10 @@
     <Compile Include="Migrations\202107082003365_Edit_Student_StudentBranch_Tables.designer.cs">
       <DependentUpon>202107082003365_Edit_Student_StudentBranch_Tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107082222423_Edit_StudentBranch_Table.cs" />
+    <Compile Include="Migrations\202107082222423_Edit_StudentBranch_Table.designer.cs">
+      <DependentUpon>202107082222423_Edit_StudentBranch_Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\School.cs" />
@@ -143,6 +147,8 @@
     <Compile Include="Models\StudentBranch.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ScoreViewModel.cs" />
+    <Compile Include="ViewModels\StudentChoiceViewModel.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107082003365_Edit_Student_StudentBranch_Tables.resx">
       <DependentUpon>202107082003365_Edit_Student_StudentBranch_Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107082222423_Edit_StudentBranch_Table.resx">
+      <DependentUpon>202107082222423_Edit_StudentBranch_Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
