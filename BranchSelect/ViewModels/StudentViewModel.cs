@@ -9,6 +9,8 @@ namespace BranchSelect.ViewModels
     {
         public String Id { get; set; }
         public String NameAndSurname { get; set; }
+        public byte FirstSelect { get; set; }
+        public byte SecondSelect { get; set; }
         public String ParentNameAndSurname { get; set; }
         public String Class { get; set; }
         public String Adress { get; set; }

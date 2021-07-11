@@ -116,6 +116,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Context\BranchSelectDbContext.cs" />
     <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -147,7 +148,9 @@
     <Compile Include="Models\StudentBranch.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BranchStatusNumberViewModel.cs" />
     <Compile Include="ViewModels\ScoreViewModel.cs" />
+    <Compile Include="ViewModels\SetupViewModel.cs" />
     <Compile Include="ViewModels\StudentChoiceViewModel.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
   </ItemGroup>

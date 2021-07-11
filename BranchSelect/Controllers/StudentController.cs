@@ -103,7 +103,7 @@ namespace BranchSelect.Controllers
         /// <summary>
         ///This method get numbers  that How many Student choice branch and are there 
         /// </summary>
-        /// <returns>finished, unfinished and total student</returns>
+        /// <returns>finished, unfinished and total student as Paramater</returns>
         [HttpGet]
         [Route("api/student/GetBranchSelection")]
         public IHttpActionResult GetBranchSelection()
@@ -128,6 +128,45 @@ namespace BranchSelect.Controllers
            
         }
 
+
+        /// <summary>
+        /// This method get number which show instant branch number
+        /// </summary>
+        /// <returns> FistBranch,FirstBranchNumber,SecondBranch,SecondBranchNumbar ,Total and Status  as Object</returns>
+        [HttpGet]
+        [Route("api/student/GetBranchStatus")]
+        public IHttpActionResult GetBranchStatus()
+        {
+            try
+            {
+                using (db=new BranchSelectDbContext())
+                {
+                    var data = new BranchStatusNumberViewModel();
+                    data.FirstBranch = db.Branches.Find(1).Name;
+                    data.FirstBranchNumber = db.StudentBranches.Where(sb => sb.FirstSelect == 1).Count();
+                    data.SecondBranch = db.Branches.Find(2).Name;
+                    data.SecondBranchNumber = db.StudentBranches.Where(sb => sb.FirstSelect == 2).Count();
+                    data.Total = db.StudentBranches.Count();
+                    if (data.Total==db.Students.Count())
+                    {
+                        data.Status = true;
+
+                    }
+                    else
+                    {
+                        data.Status = false;
+                    }
+
+                    return Ok(data);
+                }
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+
+        }
         /// <summary>
         /// This methos update student from Student Table
         /// </summary>
@@ -142,16 +181,34 @@ namespace BranchSelect.Controllers
 
                 using (db = new BranchSelectDbContext())
                 {
-                    var data = new Student();
-                    data.Id = student.Id;
-                    data.NameAndSurname = student.NameAndSurname;
-                    data.ParentNameAndSurname = student.ParentNameAndSurname;
-                    data.Phone = student.Phone;
-                    data.Score = student.Score;
-                    data.Class = student.Class;
-                    data.Adress = student.Adress;
-                    data.Email = student.Email;
-                    db.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                    var dataStudent = new Student();
+                    var dataStudentBranch = new StudentBranch();
+                    dataStudent.Id = student.Id;
+                    dataStudent.NameAndSurname = student.NameAndSurname;
+                    dataStudent.ParentNameAndSurname = student.ParentNameAndSurname;
+                    dataStudent.Phone = student.Phone;
+                    dataStudent.Score = student.Score;
+                    dataStudent.Class = student.Class;
+                    dataStudent.Adress = student.Adress;
+                    dataStudent.Email = student.Email;
+
+                    dataStudentBranch.StudentId = dataStudent.Id;
+                    dataStudentBranch.FirstSelect = student.FirstSelect;
+                    dataStudentBranch.SecondSelect = student.SecondSelect;
+
+                    if (db.StudentBranches.Where(sb => sb.StudentId == dataStudentBranch.StudentId).Count() > 0)
+                    {
+                        db.Entry(dataStudentBranch).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    else
+                    {
+                        db.Entry(dataStudentBranch).State = System.Data.Entity.EntityState.Added;
+                    }
+
+                    db.Entry(dataStudent).State = System.Data.Entity.EntityState.Modified;
+
+
+
                     db.SaveChanges();
 
                     return Ok();
@@ -162,6 +219,10 @@ namespace BranchSelect.Controllers
 
                 return NotFound();
             }
+
+               
+            
+          
         }
     }
 }
