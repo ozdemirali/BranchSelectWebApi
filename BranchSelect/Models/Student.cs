@@ -20,6 +20,7 @@ namespace BranchSelect.Models
         public String Phone { get; set; }
         public String Email { get; set; }
         public float Score { get; set; }
+        public Boolean IsDeleted { get; set; }
 
         public virtual StudentBranch StudentBranch { get; set; }
     }

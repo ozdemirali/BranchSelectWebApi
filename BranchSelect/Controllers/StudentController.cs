@@ -28,27 +28,50 @@ namespace BranchSelect.Controllers
 
                 using (db = new BranchSelectDbContext())
                 {
-                    //var data = db.Students.Find(id);
-                    var student = (from s in db.Students
-                                   select new
-                                    {
-                                        Id=s.Id,
-                                        NameAndSurname=s.NameAndSurname,
-                                        Class = s.Class,
-                                        ParentNameAndSurname = s.ParentNameAndSurname,
-                                        Adress = s.Adress,
-                                        Phone = s.Phone,
-                                        Email = s.Email,
-                                    }).Where(s=>s.Id==id).FirstOrDefault();
-                    
+
+                    StudentViewModel student=new StudentViewModel();
+                    var data = db.Students.Where(s=>s.Id==id && s.IsDeleted==false).FirstOrDefault();
+                    if(data!=null)
+                    {
+                        //student = new StudentViewModel();
+                        if(db.StudentBranches.Where(sb=>sb.StudentId==id).Count()>0)
+                        {
+                            var studentBranchSelect = db.StudentBranches.Find(id);
+                            if(studentBranchSelect!=null)
+                            {
+                                student.Id = data.Id;
+                                student.NameAndSurname = data.NameAndSurname;
+                                student.Class = data.Class;
+                                student.ParentNameAndSurname = data.ParentNameAndSurname;
+                                student.FirstSelect = studentBranchSelect.FirstSelect;
+                                student.SecondSelect = studentBranchSelect.SecondSelect;
+                                student.Adress = data.Adress;
+                                student.Phone = data.Phone;
+                                student.Email = data.Email;
+                            }
+                            else
+                            {
+                                student.Id = data.Id;
+                                student.NameAndSurname = data.NameAndSurname;
+                                student.Class = data.Class;
+                                student.ParentNameAndSurname = data.ParentNameAndSurname;
+                                student.Adress = data.Adress;
+                                student.Phone = data.Phone;
+                                student.Email = data.Email;
+                            }
+                        }
+
+                        return Ok(student);
+                    }
+
                     return Ok(student);
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return NotFound();
+                return Ok(e.Message);
             }
         }
 
@@ -67,26 +90,41 @@ namespace BranchSelect.Controllers
 
                     //var branches = db.Branches.ToList();
                     var data = (from s in db.Students
-                                          join sb in db.StudentBranches
-                                          on s.Id equals sb.StudentId
                                           select new
                                           {
                                               Id=s.Id,
                                               NameAndSurname=s.NameAndSurname,
                                               Score=s.Score,
-                                              FirstSelect = sb.FirstSelect,
-                                          }).ToList();
+                                              IsDeleted=s.IsDeleted
+                                          }).Where(s=>s.IsDeleted==false).ToList();
 
                     List<StudentChoiceViewModel> studentChoices = new List<StudentChoiceViewModel>();
+                    String studentFirstSelect;
                     foreach (var item in data)
                     {
-                        studentChoices.Add(new StudentChoiceViewModel()
+                        
+                        if (db.StudentBranches.Where(sb => sb.StudentId == item.Id).Count()>0) {
+
+                            var studentBranches = db.StudentBranches.Where(sb => sb.StudentId == item.Id).FirstOrDefault().FirstSelect;
+                            studentFirstSelect = db.Branches.Where(b => b.Id == studentBranches).FirstOrDefault().Name;
+                            studentChoices.Add(new StudentChoiceViewModel()
+                            {
+                                Id = item.Id,
+                                NameAndSurname = item.NameAndSurname,
+                                Choice = studentFirstSelect,
+                                Score = item.Score,
+                            });
+
+                        }
+                        else
                         {
-                            Id=item.Id,
-                            NameAndSurname=item.NameAndSurname,
-                            Choice=db.Branches.Where(b=>b.Id==item.FirstSelect).FirstOrDefault().Name,
-                            Score=item.Score,
-                        });
+                            studentChoices.Add(new StudentChoiceViewModel()
+                            {
+                                Id = item.Id,
+                                NameAndSurname = item.NameAndSurname,
+                                Score = item.Score,
+                            });
+                        }
                     }       
 
                     return Ok(studentChoices);

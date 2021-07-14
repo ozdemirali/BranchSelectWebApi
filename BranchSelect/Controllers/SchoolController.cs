@@ -1,11 +1,16 @@
 ﻿using BranchSelect.Context;
 using BranchSelect.Models;
 using BranchSelect.ViewModels;
+using ExcelDataReader;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace BranchSelect.Controllers
@@ -76,5 +81,76 @@ namespace BranchSelect.Controllers
             }
             
         }
+
+        [HttpPost]
+        [Route("api/School/Upload")]
+        public async Task<string> Upload()
+        {
+            try
+            {
+                var provider = new MultipartMemoryStreamProvider();
+                 await Request.Content.ReadAsMultipartAsync(provider);
+
+                IExcelDataReader excelReader = null;
+                
+                // extract file name and file contents
+                Stream stream= new MemoryStream(await provider.Contents[0].ReadAsByteArrayAsync());
+
+                //get fileName
+                var filename = provider.Contents[0].Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+
+                //Check file type 
+                if (filename.EndsWith(".xls"))
+                {
+                    excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+                }
+
+                else if (filename.EndsWith(".xlsx"))
+                {
+                    excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                }
+                else
+                {
+                    return "The File is not Excel File";
+                }
+
+                DataSet result = excelReader.AsDataSet();
+                Student data = new Student();
+
+
+
+                for (var i = 1; i < result.Tables[0].Rows.Count; i++)
+                {
+                    data.Id = result.Tables[0].Rows[i][0].ToString();
+                    data.NameAndSurname = result.Tables[0].Rows[i][1].ToString();
+                    data.Class= result.Tables[0].Rows[i][2].ToString();
+                    data.Score = float.Parse(result.Tables[0].Rows[1][3].ToString());
+
+                    using (var db = new BranchSelectDbContext())
+                    {
+                        if (db.Students.Where(s=>s.Id==data.Id).Count()>0)
+                        {
+                            db.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.Entry(data).State = System.Data.Entity.EntityState.Added;
+
+                        }
+                        db.SaveChanges();
+                    }
+
+                }
+
+                return "Ok";
+
+            }
+            catch (Exception e)
+            {
+
+                return e.Message.ToString();
+            }
+        }
+
     }
 }
