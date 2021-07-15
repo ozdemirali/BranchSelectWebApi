@@ -18,6 +18,11 @@ namespace BranchSelect.Controllers
     public class SchoolController : ApiController
     {
         //private BranchSelectDbContext db;
+        /// <summary>
+        /// This method save school infpormation on School Table from Database
+        /// </summary>
+        /// <param name="setup"></param>
+        /// <returns>Ok</returns>
         public IHttpActionResult Post(SetupViewModel setup)
         {
             try
@@ -74,14 +79,25 @@ namespace BranchSelect.Controllers
                     return Ok();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
 
-                return NotFound();
+                return Ok(e.Message);
             }
             
         }
 
+        /// <summary>
+        /// This method save student information from excel file to Student table from Database
+        /// </summary>
+        /// <returns>Ok</returns>
         [HttpPost]
         [Route("api/School/Upload")]
         public async Task<string> Upload()
@@ -125,6 +141,7 @@ namespace BranchSelect.Controllers
                     data.NameAndSurname = result.Tables[0].Rows[i][1].ToString();
                     data.Class= result.Tables[0].Rows[i][2].ToString();
                     data.Score = float.Parse(result.Tables[0].Rows[1][3].ToString());
+               
 
                     using (var db = new BranchSelectDbContext())
                     {
@@ -147,7 +164,13 @@ namespace BranchSelect.Controllers
             }
             catch (Exception e)
             {
-
+                using (var db=new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
                 return e.Message.ToString();
             }
         }

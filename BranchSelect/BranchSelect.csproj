@@ -152,8 +152,13 @@
     <Compile Include="Migrations\202107141810403_edit_Student_Table.designer.cs">
       <DependentUpon>202107141810403_edit_Student_Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107151901351_Creat_Error_Table.cs" />
+    <Compile Include="Migrations\202107151901351_Creat_Error_Table.designer.cs">
+      <DependentUpon>202107151901351_Creat_Error_Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\School.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentBranch.cs" />
@@ -200,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107141810403_edit_Student_Table.resx">
       <DependentUpon>202107141810403_edit_Student_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107151901351_Creat_Error_Table.resx">
+      <DependentUpon>202107151901351_Creat_Error_Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,5 @@
 ﻿using BranchSelect.Context;
+using BranchSelect.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,10 @@ namespace BranchSelect.Controllers
 {
     public class BranchController : ApiController
     {
+        /// <summary>
+        /// This methos get all branches from Database
+        /// </summary>
+        /// <returns>This data is as json</returns>
         public IHttpActionResult Get()
         {
             try
@@ -21,10 +26,17 @@ namespace BranchSelect.Controllers
                     return Ok(branches);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
 
-                return NotFound();
+                return Ok(e.Message);
             }
             
         }

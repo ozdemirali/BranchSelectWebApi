@@ -20,6 +20,8 @@ namespace BranchSelect.Context
         public DbSet<StudentBranch> StudentBranches { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Error> Errors { get; set; }
+
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
         //    // Configure Student & StudentAddress entity

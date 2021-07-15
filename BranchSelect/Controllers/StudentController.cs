@@ -130,10 +130,17 @@ namespace BranchSelect.Controllers
                     return Ok(studentChoices);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
 
-                return NotFound();
+                return Ok(e.Message);
             }
         }
 
@@ -151,16 +158,29 @@ namespace BranchSelect.Controllers
                 using (db = new BranchSelectDbContext())
                 {
                     var data = new ScoreViewModel();
-                    data.Finished = db.StudentBranches.Count();
-                    data.Total = db.Students.Count();
+                    data.Finished = (from s in db.Students
+                                     join sb in db.StudentBranches
+                                     on s.Id equals sb.StudentId
+                                     where s.IsDeleted == false
+                                     select new
+                                     {
+                                     }).Count();
+                    data.Total = db.Students.Where(s => s.IsDeleted == false).Count();
                     data.UnFinished = data.Total - data.Finished;
                     return Ok(data);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
 
-                return NotFound();
+                return Ok(e.Message);
             }
 
            
@@ -181,11 +201,24 @@ namespace BranchSelect.Controllers
                 {
                     var data = new BranchStatusNumberViewModel();
                     data.FirstBranch = db.Branches.Find(1).Name;
-                    data.FirstBranchNumber = db.StudentBranches.Where(sb => sb.FirstSelect == 1).Count();
+                    data.FirstBranchNumber = (from s in db.Students
+                                              join sb in db.StudentBranches
+                                              on s.Id equals sb.StudentId
+                                              where s.IsDeleted==false && sb.FirstSelect==1
+                                              select new { }).Count();
                     data.SecondBranch = db.Branches.Find(2).Name;
-                    data.SecondBranchNumber = db.StudentBranches.Where(sb => sb.FirstSelect == 2).Count();
-                    data.Total = db.StudentBranches.Count();
-                    if (data.Total==db.Students.Count())
+                    data.SecondBranchNumber= (from s in db.Students
+                                              join sb in db.StudentBranches
+                                              on s.Id equals sb.StudentId
+                                              where s.IsDeleted == false && sb.FirstSelect == 2
+                                              select new { }).Count();
+                    data.Total = (from s in db.Students
+                                  join sb in db.StudentBranches
+                                  on s.Id equals sb.StudentId
+                                  where s.IsDeleted == false
+                                  select new { }).Count();
+
+                    if (data.Total==db.Students.Where(s=>s.IsDeleted==false).Count())
                     {
                         data.Status = true;
 
@@ -198,10 +231,18 @@ namespace BranchSelect.Controllers
                     return Ok(data);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return NotFound();
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
+
+                return Ok(e.Message);
             }
 
         }
@@ -252,10 +293,18 @@ namespace BranchSelect.Controllers
                     return Ok();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return NotFound();
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
+
+                return Ok(e.Message);
             }
 
                
