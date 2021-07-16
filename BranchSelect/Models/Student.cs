@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace BranchSelect.Models
     {
         [Key]
         [Column(TypeName = "VARCHAR")]
-        [StringLength(50)]
+        [StringLength(11)]
         public String Id { get; set; }
         public String NameAndSurname { get; set; }
         public String ParentNameAndSurname { get; set; }

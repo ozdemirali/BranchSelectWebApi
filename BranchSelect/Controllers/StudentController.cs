@@ -6,66 +6,74 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace BranchSelect.Controllers
 {
-
+   
     public class StudentController : ApiController
     {
         private BranchSelectDbContext db;
 
+        private String FindRole()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+
+          
+            //Getting the Roles only if you set the roles in the claims
+            var role = identity.Claims
+                       .Where(c => c.Type == ClaimTypes.Role)
+                       .Select(c => c.Value).ToArray();
+            return role[0];
+        }
 
         /// <summary>
         /// This Method get data from Studut Table by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The data contains all information</returns>
+        [Authorize(Roles ="Admin,User")]
         public IHttpActionResult Get(String id)
         {
+
             try
             {
 
                 using (db = new BranchSelectDbContext())
                 {
 
-                    StudentViewModel student=new StudentViewModel();
+                    StudentViewModel student = null;
                     var data = db.Students.Where(s=>s.Id==id && s.IsDeleted==false).FirstOrDefault();
                     if(data!=null)
                     {
-                        //student = new StudentViewModel();
-                        if(db.StudentBranches.Where(sb=>sb.StudentId==id).Count()>0)
+                        student = new StudentViewModel();
+                        student.Id = data.Id;
+                        student.NameAndSurname = data.NameAndSurname;
+                        student.Class = data.Class;
+                        student.ParentNameAndSurname = data.ParentNameAndSurname;
+                        student.Adress = data.Adress;
+                        student.Phone = data.Phone;
+                        student.Email = data.Email;
+                        
+                        if (FindRole() == "Admin")
+                        {
+                            student.IsDeleted = data.IsDeleted;
+                        }
+
+                        if (db.StudentBranches.Where(sb=>sb.StudentId==id).Count()>0)
                         {
                             var studentBranchSelect = db.StudentBranches.Find(id);
                             if(studentBranchSelect!=null)
                             {
-                                student.Id = data.Id;
-                                student.NameAndSurname = data.NameAndSurname;
-                                student.Class = data.Class;
-                                student.ParentNameAndSurname = data.ParentNameAndSurname;
                                 student.FirstSelect = studentBranchSelect.FirstSelect;
                                 student.SecondSelect = studentBranchSelect.SecondSelect;
-                                student.Adress = data.Adress;
-                                student.Phone = data.Phone;
-                                student.Email = data.Email;
-                            }
-                            else
-                            {
-                                student.Id = data.Id;
-                                student.NameAndSurname = data.NameAndSurname;
-                                student.Class = data.Class;
-                                student.ParentNameAndSurname = data.ParentNameAndSurname;
-                                student.Adress = data.Adress;
-                                student.Phone = data.Phone;
-                                student.Email = data.Email;
                             }
                         }
 
                         return Ok(student);
                     }
-
                     return Ok(student);
-
                 }
             }
             catch (Exception e)
@@ -79,6 +87,7 @@ namespace BranchSelect.Controllers
         ///This method fetches all students'infromation.  
         /// </summary>
         /// <returns>This information contains Id,NameAndSurname,FirstChoice and Score</returns>
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/student/GetAll")]
         public IHttpActionResult GetAll()
@@ -149,6 +158,7 @@ namespace BranchSelect.Controllers
         ///This method get numbers  that How many Student choice branch and are there 
         /// </summary>
         /// <returns>finished, unfinished and total student as Paramater</returns>
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/student/GetBranchSelection")]
         public IHttpActionResult GetBranchSelection()
@@ -191,6 +201,7 @@ namespace BranchSelect.Controllers
         /// This method get number which show instant branch number
         /// </summary>
         /// <returns> FistBranch,FirstBranchNumber,SecondBranch,SecondBranchNumbar ,Total and Status  as Object</returns>
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/student/GetBranchStatus")]
         public IHttpActionResult GetBranchStatus()
@@ -246,11 +257,14 @@ namespace BranchSelect.Controllers
             }
 
         }
+
         /// <summary>
         /// This methos update student from Student Table
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
+        
+        [Authorize(Roles = "Admin,User")]
         public IHttpActionResult Put(StudentViewModel student)
         {
             try
@@ -260,42 +274,48 @@ namespace BranchSelect.Controllers
 
                 using (db = new BranchSelectDbContext())
                 {
-                    var dataStudent = new Student();
-                    var dataStudentBranch = new StudentBranch();
-                    dataStudent.Id = student.Id;
-                    dataStudent.NameAndSurname = student.NameAndSurname;
-                    dataStudent.ParentNameAndSurname = student.ParentNameAndSurname;
-                    dataStudent.Phone = student.Phone;
-                    dataStudent.Score = student.Score;
-                    dataStudent.Class = student.Class;
-                    dataStudent.Adress = student.Adress;
-                    dataStudent.Email = student.Email;
 
-                    dataStudentBranch.StudentId = dataStudent.Id;
-                    dataStudentBranch.FirstSelect = student.FirstSelect;
-                    dataStudentBranch.SecondSelect = student.SecondSelect;
-
-                    if (db.StudentBranches.Where(sb => sb.StudentId == dataStudentBranch.StudentId).Count() > 0)
+                    if (db.Students.Where(s=>s.Id==student.Id).Count()>0)
                     {
-                        db.Entry(dataStudentBranch).State = System.Data.Entity.EntityState.Modified;
+
+                        var dataStudent = db.Students.Find(student.Id);
+                        dataStudent.Id = student.Id;
+                        dataStudent.NameAndSurname = student.NameAndSurname;
+                        dataStudent.ParentNameAndSurname = student.ParentNameAndSurname;
+                        dataStudent.Phone = student.Phone;
+                        dataStudent.Score = student.Score;
+                        dataStudent.Class = student.Class;
+                        dataStudent.Adress = student.Adress;
+                        dataStudent.Email = student.Email;
+                        if (FindRole() == "Admin")
+                        {
+                            dataStudent.IsDeleted = student.IsDeleted;
+                        }
+                        var dataStudentBranch = new StudentBranch();
+                        dataStudentBranch.StudentId = dataStudent.Id;
+                        dataStudentBranch.FirstSelect = student.FirstSelect;
+                        dataStudentBranch.SecondSelect = student.SecondSelect;
+
+                        if (db.StudentBranches.Where(sb => sb.StudentId == dataStudentBranch.StudentId).Count() > 0)
+                        {
+                            db.Entry(dataStudentBranch).State = System.Data.Entity.EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.Entry(dataStudentBranch).State = System.Data.Entity.EntityState.Added;
+                        }
+
+                        db.Entry(dataStudent).State = System.Data.Entity.EntityState.Modified;
+
+                        db.SaveChanges();
+
                     }
-                    else
-                    {
-                        db.Entry(dataStudentBranch).State = System.Data.Entity.EntityState.Added;
-                    }
-
-                    db.Entry(dataStudent).State = System.Data.Entity.EntityState.Modified;
-
-
-
-                    db.SaveChanges();
 
                     return Ok();
                 }
             }
             catch (Exception e)
             {
-
                 using (var db = new BranchSelectDbContext())
                 {
                     var error = new Error();
@@ -303,7 +323,6 @@ namespace BranchSelect.Controllers
                     db.Errors.Add(error);
                     db.SaveChanges();
                 }
-
                 return Ok(e.Message);
             }
 

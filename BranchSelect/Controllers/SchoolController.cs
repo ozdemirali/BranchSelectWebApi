@@ -15,6 +15,7 @@ using System.Web.Http;
 
 namespace BranchSelect.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class SchoolController : ApiController
     {
         //private BranchSelectDbContext db;
@@ -141,7 +142,6 @@ namespace BranchSelect.Controllers
                     data.NameAndSurname = result.Tables[0].Rows[i][1].ToString();
                     data.Class= result.Tables[0].Rows[i][2].ToString();
                     data.Score = float.Parse(result.Tables[0].Rows[1][3].ToString());
-               
 
                     using (var db = new BranchSelectDbContext())
                     {

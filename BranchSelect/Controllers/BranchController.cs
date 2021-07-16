@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace BranchSelect.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class BranchController : ApiController
     {
         /// <summary>
