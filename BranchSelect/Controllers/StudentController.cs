@@ -16,6 +16,10 @@ namespace BranchSelect.Controllers
     {
         private BranchSelectDbContext db;
 
+        /// <summary>
+        /// Find role who user join to app.
+        /// </summary>
+        /// <returns>the value comes as string</returns>
         private String FindRole()
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -136,7 +140,8 @@ namespace BranchSelect.Controllers
                         }
                     }       
 
-                    return Ok(studentChoices);
+
+                    return Ok(studentChoices.OrderBy(x=>x.Score));
                 }
             }
             catch (Exception e)

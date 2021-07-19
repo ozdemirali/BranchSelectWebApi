@@ -12,6 +12,8 @@ namespace BranchSelect.Controllers
     [Authorize(Roles ="Admin")]
     public class BranchController : ApiController
     {
+
+        private BranchSelectDbContext db;
         /// <summary>
         /// This methos get all branches from Database
         /// </summary>
@@ -20,7 +22,7 @@ namespace BranchSelect.Controllers
         {
             try
             {
-                using (var db = new BranchSelectDbContext())
+                using (db = new BranchSelectDbContext())
                 {
                     var branches = db.Branches.ToList();
 
@@ -40,6 +42,112 @@ namespace BranchSelect.Controllers
                 return Ok(e.Message);
             }
             
+        }
+
+
+        [HttpGet]
+        [Route("api/branch/CreateClasses")]
+        public IHttpActionResult CreateClasses()
+        {
+            try
+            {
+                using (db = new BranchSelectDbContext())
+                {
+
+                    var firstSelecetNumber = (from s in db.Students
+                                              join sb in db.StudentBranches
+                                              on s.Id equals sb.StudentId
+                                              where s.IsDeleted == false && sb.FirstSelect == 1
+                                              select new
+                                              { }).Count();
+
+                    var secondSelectNumber = (from s in db.Students
+                                              join sb in db.StudentBranches
+                                              on s.Id equals sb.StudentId
+                                              where s.IsDeleted == false && sb.FirstSelect == 2
+                                              select new
+                                              { }).Count();
+
+                    var minClassCount = db.Schools.Find(1).MinClassCount;
+
+                    if (firstSelecetNumber >= minClassCount)
+                    {
+                        var dataFirst = (from s in db.Students
+                                         join sb in db.StudentBranches
+                                         on s.Id equals sb.StudentId
+                                         where s.IsDeleted == false && sb.FirstSelect == 1
+                                         select new
+                                         {
+                                             StudentId = sb.StudentId,
+
+                                         }).ToList();
+
+                        var dataSecond = (from s in db.Students
+                                          join sb in db.StudentBranches
+                                          on s.Id equals sb.StudentId
+                                          where s.IsDeleted == false && sb.FirstSelect == 2
+                                          select new
+                                          {
+                                              StudentId = sb.StudentId,
+
+                                          }).ToList();
+
+
+
+                        var studentBranch = db.StudentBranches.ToList();
+
+                        foreach (var item in dataFirst)
+                        {
+                            studentBranch.Where(sb => sb.StudentId == item.StudentId).FirstOrDefault().Result = 1;
+                        }
+
+
+                        if (secondSelectNumber >= minClassCount)
+                        {
+                            foreach (var item in dataSecond)
+                            {
+                                studentBranch.Where(sb => sb.StudentId == item.StudentId).FirstOrDefault().Result = 2;
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in dataSecond)
+                            {
+                                studentBranch.Where(sb => sb.StudentId == item.StudentId).FirstOrDefault().Result = 1;
+                            }
+                        }
+
+
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        var data = db.StudentBranches.ToList();
+                        data.ForEach(r => r.Result = 2);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
+
+                return Ok(e.Message);
+            }
+
+
+           
+
+
+
+            return Ok();
         }
     }
 }

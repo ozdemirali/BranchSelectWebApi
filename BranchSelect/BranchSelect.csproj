@@ -193,6 +193,14 @@
     <Compile Include="Migrations\202107161749587_Edit_User_Table.designer.cs">
       <DependentUpon>202107161749587_Edit_User_Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107191907378_Edit_StudentBranch_Table1.cs" />
+    <Compile Include="Migrations\202107191907378_Edit_StudentBranch_Table1.designer.cs">
+      <DependentUpon>202107191907378_Edit_StudentBranch_Table1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107191928341_Edit_School_Table.cs" />
+    <Compile Include="Migrations\202107191928341_Edit_School_Table.designer.cs">
+      <DependentUpon>202107191928341_Edit_School_Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Error.cs" />
@@ -259,6 +267,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107161749587_Edit_User_Table.resx">
       <DependentUpon>202107161749587_Edit_User_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107191907378_Edit_StudentBranch_Table1.resx">
+      <DependentUpon>202107191907378_Edit_StudentBranch_Table1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107191928341_Edit_School_Table.resx">
+      <DependentUpon>202107191928341_Edit_School_Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

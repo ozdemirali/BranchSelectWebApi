@@ -12,5 +12,6 @@ namespace BranchSelect.ViewModels
         public String AsistantDirector { get; set; }
         public String FirstBranch { get; set; }
         public String SecondBranch { get; set; }
+        public byte MinClassCount { get; set; }
     }
 }

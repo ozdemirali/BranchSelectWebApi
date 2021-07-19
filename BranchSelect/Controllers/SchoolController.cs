@@ -39,6 +39,7 @@ namespace BranchSelect.Controllers
                     dataSchool.Name = setup.SchoolName;
                     dataSchool.BranchTeacher = setup.BranchTeacher;
                     dataSchool.AssistantDirector = setup.AsistantDirector;
+                    dataSchool.MinClassCount = setup.MinClassCount;
 
                     if (db.Schools.Where(s => s.Id == dataSchool.Id).Count() > 0)
                     {
