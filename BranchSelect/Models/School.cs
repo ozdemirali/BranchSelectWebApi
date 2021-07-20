@@ -11,7 +11,6 @@ namespace BranchSelect.Models
         public String Name { get; set; }
         public String BranchTeacher { get; set; }
         public String AssistantDirector { get; set; }
-
         public byte MinClassCount { get; set; }
     }
 }
