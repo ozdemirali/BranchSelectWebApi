@@ -294,7 +294,7 @@ namespace BranchSelect.Controllers
         /// <returns></returns>
         
         [Authorize(Roles = "Admin,User")]
-        public IHttpActionResult Put(StudentViewModel student)
+        public IHttpActionResult Post(StudentViewModel student)
         {
             try
             {
