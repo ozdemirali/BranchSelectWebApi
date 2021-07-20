@@ -144,8 +144,8 @@ namespace BranchSelect.Controllers
                     student.NameAndSurname = result.Tables[0].Rows[i][1].ToString();
                     student.Class= result.Tables[0].Rows[i][2].ToString();
                     student.Score = float.Parse(result.Tables[0].Rows[1][3].ToString());
-                    user.Id = result.Tables[0].Rows[i][0].ToString(); 
                    
+                    user.Id = result.Tables[0].Rows[i][0].ToString(); 
                     user.Password = user.Id.Remove(6);
                     user.RoleId=2;
 
