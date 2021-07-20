@@ -82,6 +82,13 @@ namespace BranchSelect.Controllers
             }
             catch (Exception e)
             {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
 
                 return Ok(e.Message);
             }

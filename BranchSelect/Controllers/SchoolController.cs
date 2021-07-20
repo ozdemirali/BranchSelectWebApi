@@ -133,27 +133,44 @@ namespace BranchSelect.Controllers
                 }
 
                 DataSet result = excelReader.AsDataSet();
-                Student data = new Student();
-
+                Student student = new Student();
+                User user = new User();
 
 
                 for (var i = 1; i < result.Tables[0].Rows.Count; i++)
                 {
-                    data.Id = result.Tables[0].Rows[i][0].ToString();
-                    data.NameAndSurname = result.Tables[0].Rows[i][1].ToString();
-                    data.Class= result.Tables[0].Rows[i][2].ToString();
-                    data.Score = float.Parse(result.Tables[0].Rows[1][3].ToString());
+
+                    student.Id = result.Tables[0].Rows[i][0].ToString();
+                    student.NameAndSurname = result.Tables[0].Rows[i][1].ToString();
+                    student.Class= result.Tables[0].Rows[i][2].ToString();
+                    student.Score = float.Parse(result.Tables[0].Rows[1][3].ToString());
+                    user.Id = result.Tables[0].Rows[i][0].ToString(); 
+                   
+                    user.Password = user.Id.Remove(6);
+                    user.RoleId=2;
+
 
                     using (var db = new BranchSelectDbContext())
                     {
-                        if (db.Students.Where(s=>s.Id==data.Id).Count()>0)
+                        //Checks if there is a recor in the student table
+                        if (db.Students.Where(s=>s.Id== student.Id).Count()>0)
                         {
-                            db.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                            db.Entry(student).State = System.Data.Entity.EntityState.Modified;
                         }
                         else
                         {
-                            db.Entry(data).State = System.Data.Entity.EntityState.Added;
+                            db.Entry(student).State = System.Data.Entity.EntityState.Added;
 
+                        }
+
+                        //Checks if there is a recor in the user table
+                        if (db.Users.Where(u=>u.Id==user.Id).Count()>0)
+                        {
+                            db.Entry(user).State= System.Data.Entity.EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.Entry(user).State = System.Data.Entity.EntityState.Added;
                         }
                         db.SaveChanges();
                     }
