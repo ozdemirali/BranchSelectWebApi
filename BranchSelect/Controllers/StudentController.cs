@@ -113,21 +113,40 @@ namespace BranchSelect.Controllers
 
                     List<StudentChoiceViewModel> studentChoices = new List<StudentChoiceViewModel>();
                     String studentFirstSelect;
+                    String  result;
+                    
                     foreach (var item in data)
                     {
                         
                         if (db.StudentBranches.Where(sb => sb.StudentId == item.Id).Count()>0) {
 
-                            var studentBranches = db.StudentBranches.Where(sb => sb.StudentId == item.Id).FirstOrDefault().FirstSelect;
-                            studentFirstSelect = db.Branches.Where(b => b.Id == studentBranches).FirstOrDefault().Name;
+                            var studentBranch = (from sb in db.StudentBranches
+                                                 where sb.StudentId == item.Id
+                                                 select new
+                                                 {
+                                                     Id=sb.StudentId,
+                                                     FirstSelect=sb.FirstSelect,
+                                                     Result=sb.Result
+                                                 }).FirstOrDefault();
+
+                            studentFirstSelect = db.Branches.Where(b => b.Id == studentBranch.FirstSelect).FirstOrDefault().Name;
+                            if(studentBranch.Result!=0)
+                            {
+                                result = db.Branches.Where(b => b.Id == studentBranch.Result).FirstOrDefault().Name;
+                            }
+                            else
+                            {
+                                result = null;
+                            }
+                                
                             studentChoices.Add(new StudentChoiceViewModel()
                             {
                                 Id = item.Id,
                                 NameAndSurname = item.NameAndSurname,
                                 Choice = studentFirstSelect,
                                 Score = item.Score,
+                                Result=result,
                             });
-
                         }
                         else
                         {
@@ -138,10 +157,8 @@ namespace BranchSelect.Controllers
                                 Score = item.Score,
                             });
                         }
-                    }       
-
-
-                    return Ok(studentChoices.OrderBy(x=>x.Score));
+                    }      
+                    return Ok(studentChoices.OrderBy(ord=>ord.NameAndSurname).ThenBy(thn=>thn.Score));
                 }
             }
             catch (Exception e)

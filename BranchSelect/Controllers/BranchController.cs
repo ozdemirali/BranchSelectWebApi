@@ -44,7 +44,10 @@ namespace BranchSelect.Controllers
             
         }
 
-
+        /// <summary>
+        /// This method creates classes acording to studten choices
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/branch/CreateClasses")]
         public IHttpActionResult CreateClasses()
@@ -126,6 +129,7 @@ namespace BranchSelect.Controllers
                         data.ForEach(r => r.Result = 2);
                         db.SaveChanges();
                     }
+                    return Ok();
                 }
             }
             catch (Exception e)
@@ -141,13 +145,7 @@ namespace BranchSelect.Controllers
 
                 return Ok(e.Message);
             }
-
-
-           
-
-
-
-            return Ok();
+          
         }
     }
 }

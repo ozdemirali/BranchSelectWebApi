@@ -11,6 +11,7 @@ namespace BranchSelect.ViewModels
         public String NameAndSurname { get; set; }
         public String Choice { get; set; }
         public float Score { get; set; }
+        public String Result { get; set; }
 
     }
 }
