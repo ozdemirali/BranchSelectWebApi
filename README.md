@@ -48,7 +48,9 @@ Two method is user for this controller. You can test on Postman above
 ![SchoolUploadHeader](https://user-images.githubusercontent.com/20681737/126375237-bf9ba07d-aea7-4294-b785-e0f35423c816.PNG)
 ![SchoolUploadBody](https://user-images.githubusercontent.com/20681737/126375234-ffad2c8f-7282-42ed-8465-5c34c01a6192.PNG)
 
+Excel File should be like above.  Column Name can be different.
 
+![Sample Excel File](https://user-images.githubusercontent.com/20681737/126504269-1be11e59-06bf-466d-8d8c-1ae8e8178c0d.PNG)
 
 
 ### StudentController
