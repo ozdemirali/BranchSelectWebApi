@@ -14,6 +14,11 @@ This proje is created for the vocational high school branch selection as Web Api
 * Microsoft.Owin.Security.OAuth v4.2.0
 * Newtonsoft.json v12.0.2
 
+## Database
+* Microsoft Sql Server is used.
+* Data Source must be your Sql Server Name.
+
+
 ### Controller
 There are 3 controller
 * BranchController
