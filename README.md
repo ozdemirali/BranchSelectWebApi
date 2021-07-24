@@ -16,7 +16,11 @@ This proje is created for the vocational high school branch selection as Web Api
 
 ## Database
 * Microsoft Sql Server is used.
-* Data Source must be your Sql Server Name.
+* In Web.config file, The Data source shown in the picture below should be your Sql Server Name.
+
+![Web_Config](https://user-images.githubusercontent.com/20681737/126876992-ee07a2cb-730a-484f-992f-c967b795bf8b.PNG)
+
+
 
 
 ### Controller
