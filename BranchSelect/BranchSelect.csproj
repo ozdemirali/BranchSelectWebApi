@@ -202,6 +202,10 @@
     <Compile Include="Migrations\202107191928341_Edit_School_Table.designer.cs">
       <DependentUpon>202107191928341_Edit_School_Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108201502142_Edit_Student_Model.cs" />
+    <Compile Include="Migrations\202108201502142_Edit_Student_Model.designer.cs">
+      <DependentUpon>202108201502142_Edit_Student_Model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Error.cs" />
@@ -274,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107191928341_Edit_School_Table.resx">
       <DependentUpon>202107191928341_Edit_School_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108201502142_Edit_Student_Model.resx">
+      <DependentUpon>202108201502142_Edit_Student_Model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

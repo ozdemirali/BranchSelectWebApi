@@ -47,7 +47,7 @@ namespace BranchSelect.Controllers
                 using (db = new BranchSelectDbContext())
                 {
 
-                    StudentViewModel student = null;
+                    StudentViewModel student = new StudentViewModel();
                     var data = db.Students.Where(s=>s.Id==id && s.IsDeleted==false).FirstOrDefault();
                     if(data!=null)
                     {
@@ -56,7 +56,7 @@ namespace BranchSelect.Controllers
                         student.NameAndSurname = data.NameAndSurname;
                         student.Class = data.Class;
                         student.ParentNameAndSurname = data.ParentNameAndSurname;
-                        student.Adress = data.Adress;
+                        student.Address = data.Address;
                         student.Phone = data.Phone;
                         student.Email = data.Email;
                         
@@ -314,7 +314,7 @@ namespace BranchSelect.Controllers
                         dataStudent.Phone = student.Phone;
                         dataStudent.Score = student.Score;
                         dataStudent.Class = student.Class;
-                        dataStudent.Adress = student.Adress;
+                        dataStudent.Address = student.Address;
                         dataStudent.Email = student.Email;
                         if (FindRole() == "Admin")
                         {
