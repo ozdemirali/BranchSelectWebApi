@@ -14,6 +14,15 @@ This proje is created for the vocational high school branch selection as Web Api
 * Microsoft.Owin.Security.OAuth v4.2.0
 * Newtonsoft.json v12.0.2
 
+## Database
+* Microsoft Sql Server is used.
+* In Web.config file, The Data source shown in the picture below should be your Sql Server Name.
+
+![Web_Config](https://user-images.githubusercontent.com/20681737/126876992-ee07a2cb-730a-484f-992f-c967b795bf8b.PNG)
+
+
+
+
 ### Controller
 There are 3 controller
 * BranchController
@@ -48,7 +57,9 @@ Two method is user for this controller. You can test on Postman above
 ![SchoolUploadHeader](https://user-images.githubusercontent.com/20681737/126375237-bf9ba07d-aea7-4294-b785-e0f35423c816.PNG)
 ![SchoolUploadBody](https://user-images.githubusercontent.com/20681737/126375234-ffad2c8f-7282-42ed-8465-5c34c01a6192.PNG)
 
+Excel File should be like above.  Column Name can be different.
 
+![Sample Excel File](https://user-images.githubusercontent.com/20681737/126504269-1be11e59-06bf-466d-8d8c-1ae8e8178c0d.PNG)
 
 
 ### StudentController
