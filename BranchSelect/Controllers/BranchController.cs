@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace BranchSelect.Controllers
 {
-    [Authorize(Roles ="Admin")]
+
     public class BranchController : ApiController
     {
 
@@ -18,6 +18,7 @@ namespace BranchSelect.Controllers
         /// This methos get all branches from Database
         /// </summary>
         /// <returns>This data is as json</returns>
+        [Authorize(Roles = "Admin,User")]
         public IHttpActionResult Get()
         {
             try
@@ -48,6 +49,7 @@ namespace BranchSelect.Controllers
         /// This method creates classes acording to studten choices
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/branch/CreateClasses")]
         public IHttpActionResult CreateClasses()
