@@ -312,12 +312,12 @@ namespace BranchSelect.Controllers
                         dataStudent.NameAndSurname = student.NameAndSurname;
                         dataStudent.ParentNameAndSurname = student.ParentNameAndSurname;
                         dataStudent.Phone = student.Phone;
-                        dataStudent.Score = student.Score;
-                        dataStudent.Class = student.Class;
                         dataStudent.Address = student.Address;
                         dataStudent.Email = student.Email;
                         if (FindRole() == "Admin")
                         {
+                            dataStudent.Score = student.Score;
+                            dataStudent.Class = student.Class;
                             dataStudent.IsDeleted = student.IsDeleted;
                         }
                         var dataStudentBranch = new StudentBranch();
@@ -340,7 +340,7 @@ namespace BranchSelect.Controllers
 
                     }
 
-                    return Ok();
+                    return Ok(student);
                 }
             }
             catch (Exception e)
