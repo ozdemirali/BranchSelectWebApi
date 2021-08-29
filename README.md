@@ -74,12 +74,14 @@ Five method is user for this controller. You can test on Postman above
 * Third Method
 ![GetBranchSelection](https://user-images.githubusercontent.com/20681737/126375250-0c0a8480-f2f4-4d19-b2bf-21d3772b71a1.PNG)
 
-* Fourth MEthod
+* Fourth Method
 ![GetBranchStatus](https://user-images.githubusercontent.com/20681737/126375224-8ce0d5da-98fd-447f-847d-b415e7d21031.PNG)
 
 
-* Fifth MEthod
-![StudentPutHeaders](https://user-images.githubusercontent.com/20681737/126375241-d4340bf1-89ea-4d86-99d0-3946988fc310.PNG)
-![StudentPutBody](https://user-images.githubusercontent.com/20681737/126375239-0b37388a-4fc2-4290-bc06-bc2ddd75b871.PNG)
+* Fifth Method
+![StudentPostHeader](https://user-images.githubusercontent.com/20681737/130363038-51f4202c-3685-427c-8bd9-db52c4532a18.PNG)
+![StudentPostBody](https://user-images.githubusercontent.com/20681737/130363041-6b74ccfc-1b3b-4b1f-8c70-51cab6df70cd.PNG)
+
+
 
 
