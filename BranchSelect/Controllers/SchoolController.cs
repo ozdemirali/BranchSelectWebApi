@@ -15,7 +15,7 @@ using System.Web.Http;
 
 namespace BranchSelect.Controllers
 {
-    [Authorize(Roles ="Admin")]
+   
     public class SchoolController : ApiController
     {
         //private BranchSelectDbContext db;
@@ -24,6 +24,8 @@ namespace BranchSelect.Controllers
         /// </summary>
         /// <param name="setup"></param>
         /// <returns>Ok</returns>
+
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult Post(SetupViewModel setup)
         {
             try
@@ -97,9 +99,51 @@ namespace BranchSelect.Controllers
         }
 
         /// <summary>
+        /// This method find role of user 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,User")]
+        [HttpGet]
+        [Route("api/School/GetRole")]
+        public IHttpActionResult GetRole(String id)
+        {
+            try
+            {
+                using (var db=new BranchSelectDbContext())
+                {
+                    var role = (from u in db.Users
+                                join r in db.Roles
+                                on u.RoleId equals r.Id
+                                where u.Id == id
+                                select new
+                                {
+                                    role=r.Name
+                                }
+                              ).FirstOrDefault();
+                    return Ok(role);
+                }
+            }
+            catch (Exception e)
+            {
+
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
+
+                return Ok(e.Message);
+            }
+        }
+
+        /// <summary>
         /// This method save student information from excel file to Student table from Database
         /// </summary>
         /// <returns>Ok</returns>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("api/School/Upload")]
         public async Task<string> Upload()
