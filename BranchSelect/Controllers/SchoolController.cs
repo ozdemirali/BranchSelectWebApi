@@ -117,7 +117,7 @@ namespace BranchSelect.Controllers
                                 on u.RoleId equals r.Id
                                 where u.Id == id
                                 select new
-                                {
+                                {   id=u.Id,
                                     role=r.Name
                                 }
                               ).FirstOrDefault();
