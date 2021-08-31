@@ -54,7 +54,7 @@ Two method is user for this controller. You can test on Postman above
 ![SchoolPostBody](https://user-images.githubusercontent.com/20681737/126375231-41e60195-1438-4286-a140-def1903f77e6.PNG)
 
 * Second Method
-![SchoolGetRole](https://user-images.githubusercontent.com/20681737/131262995-cd4d1a59-a4af-42e2-9859-67abf85bb7d0.PNG)
+![SchoolGetRole](https://user-images.githubusercontent.com/20681737/131574067-7d995f0b-0ca1-4e91-afea-2744a049c75f.PNG)
 
 * Third Method
 ![SchoolUploadHeader](https://user-images.githubusercontent.com/20681737/126375237-bf9ba07d-aea7-4294-b785-e0f35423c816.PNG)
