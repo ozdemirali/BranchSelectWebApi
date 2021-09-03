@@ -78,7 +78,7 @@ Five method is user for this controller. You can test on Postman above
 ![GetBranchSelection](https://user-images.githubusercontent.com/20681737/126375250-0c0a8480-f2f4-4d19-b2bf-21d3772b71a1.PNG)
 
 * Fourth Method
-![GetBranchStatus](https://user-images.githubusercontent.com/20681737/126375224-8ce0d5da-98fd-447f-847d-b415e7d21031.PNG)
+![GetBranchStatus](https://user-images.githubusercontent.com/20681737/132063579-c7e5ecd6-b2ec-4395-842d-b44ada4e505d.PNG)
 
 
 * Fifth Method
