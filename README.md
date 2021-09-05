@@ -48,10 +48,13 @@ Two method is user for this controller. You can test on Postman above
 
 ### SchoolController
 Two method is user for this controller. You can test on Postman above
+
+* First Method
+
  
  * First Method
 ![SchoolPostHeader](https://user-images.githubusercontent.com/20681737/126375232-cac37953-b31a-422d-bd3f-359b93857c1f.PNG)
-![SchoolPostBody](https://user-images.githubusercontent.com/20681737/126375231-41e60195-1438-4286-a140-def1903f77e6.PNG)
+![SchoolPostBody](https://user-images.githubusercontent.com/20681737/132139382-12a806a8-4926-42f1-8ec5-d8404da2f114.PNG)
 
 * Second Method
 ![SchoolGetRole](https://user-images.githubusercontent.com/20681737/131574067-7d995f0b-0ca1-4e91-afea-2744a049c75f.PNG)
