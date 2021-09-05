@@ -9,7 +9,7 @@ namespace BranchSelect.ViewModels
     {
         public String SchoolName { get; set; }
         public String BranchTeacher { get; set; }
-        public String AsistantDirector { get; set; }
+        public String AssistantDirector { get; set; }
         public String FirstBranch { get; set; }
         public String SecondBranch { get; set; }
         public byte MinClassCount { get; set; }

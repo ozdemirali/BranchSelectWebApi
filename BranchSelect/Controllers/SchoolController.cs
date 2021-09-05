@@ -20,7 +20,52 @@ namespace BranchSelect.Controllers
     {
         //private BranchSelectDbContext db;
         /// <summary>
-        /// This method save school infpormation on School Table from Database
+        /// This method get school information from School Table and Branch Table  
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles="Admin")]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var data = new SetupViewModel();
+                    if (db.Schools.Count() > 0)
+                    {
+                        var setupData = db.Schools.FirstOrDefault();
+                        data.SchoolName = setupData.Name;
+                        data.BranchTeacher = setupData.BranchTeacher;
+                        data.AssistantDirector = setupData.AssistantDirector;
+                        data.MinClassCount = setupData.MinClassCount;
+
+                        var branchData = db.Branches.ToList();
+                        data.FirstBranch = branchData[0].Name;
+                        data.SecondBranch = branchData[1].Name;
+                        
+
+                    }
+
+                    return Ok(data);  
+
+                }
+            }
+            catch (Exception e)
+            {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
+
+                return Ok(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method save school information on School Table from Database
         /// </summary>
         /// <param name="setup"></param>
         /// <returns>Ok</returns>
@@ -40,7 +85,7 @@ namespace BranchSelect.Controllers
                     dataSchool.Id = 1;
                     dataSchool.Name = setup.SchoolName;
                     dataSchool.BranchTeacher = setup.BranchTeacher;
-                    dataSchool.AssistantDirector = setup.AsistantDirector;
+                    dataSchool.AssistantDirector = setup.AssistantDirector;
                     dataSchool.MinClassCount = setup.MinClassCount;
 
                     if (db.Schools.Where(s => s.Id == dataSchool.Id).Count() > 0)

@@ -258,15 +258,15 @@ namespace BranchSelect.Controllers
                                   where s.IsDeleted == false
                                   select new { }).Count();
 
-                    if (data.Total==db.Students.Where(s=>s.IsDeleted==false).Count())
-                    {
-                        data.Status = true;
+                    //if (data.Total==db.Students.Where(s=>s.IsDeleted==false).Count())
+                    //{
+                    //    data.Status = true;
 
-                    }
-                    else
-                    {
-                        data.Status = false;
-                    }
+                    //}
+                    //else
+                    //{
+                    //    data.Status = false;
+                    //}
 
                     return Ok(data);
                 }

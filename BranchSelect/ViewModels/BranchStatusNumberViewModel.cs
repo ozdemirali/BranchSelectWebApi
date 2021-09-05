@@ -12,6 +12,6 @@ namespace BranchSelect.ViewModels
         public String SecondBranch { get; set; }
         public int SecondBranchNumber { get; set; }
         public int Total { get; set; }
-        public Boolean Status  { get; set; }
+        //public Boolean Status  { get; set; }
     }
 }
