@@ -252,21 +252,9 @@ namespace BranchSelect.Controllers
                                               on s.Id equals sb.StudentId
                                               where s.IsDeleted == false && sb.FirstSelect == 2
                                               select new { }).Count();
-                    data.Total = (from s in db.Students
-                                  join sb in db.StudentBranches
-                                  on s.Id equals sb.StudentId
-                                  where s.IsDeleted == false
-                                  select new { }).Count();
 
-                    //if (data.Total==db.Students.Where(s=>s.IsDeleted==false).Count())
-                    //{
-                    //    data.Status = true;
+                    data.Total = db.Students.Where(s => s.IsDeleted == false).Count();
 
-                    //}
-                    //else
-                    //{
-                    //    data.Status = false;
-                    //}
 
                     return Ok(data);
                 }
