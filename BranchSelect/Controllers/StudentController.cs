@@ -59,11 +59,9 @@ namespace BranchSelect.Controllers
                         student.Address = data.Address;
                         student.Phone = data.Phone;
                         student.Email = data.Email;
+                        student.Score = data.Score;
                         
-                        if (FindRole() == "Admin")
-                        {
-                            student.IsDeleted = data.IsDeleted;
-                        }
+                       
 
                         if (db.StudentBranches.Where(sb=>sb.StudentId==id).Count()>0)
                         {
@@ -72,7 +70,21 @@ namespace BranchSelect.Controllers
                             {
                                 student.FirstSelect = studentBranchSelect.FirstSelect;
                                 student.SecondSelect = studentBranchSelect.SecondSelect;
+
+
+
+                                if (studentBranchSelect.Result != 0)
+                                {
+                                    student.Choice = db.Branches.Where(b => b.Id == studentBranchSelect.Result).FirstOrDefault().Name;
+                                }
+                                else
+                                {
+                                    student.Choice = null;
+                                }
                             }
+
+
+
                         }
 
                         return Ok(student);
@@ -133,11 +145,14 @@ namespace BranchSelect.Controllers
                                                  {
                                                      Id=sb.StudentId,
                                                      FirstSelect=sb.FirstSelect,
-                                                     Result=sb.Result
+                                                     SecondSelect=sb.SecondSelect,
+                                                     Result=sb.Result,
                                                  }).FirstOrDefault();
 
                             studentFirstSelect = db.Branches.Where(b => b.Id == studentBranch.FirstSelect).FirstOrDefault().Name;
-                            if(studentBranch.Result!=0)
+
+
+                            if (studentBranch.Result!=0)
                             {
                                 result = db.Branches.Where(b => b.Id == studentBranch.Result).FirstOrDefault().Name;
                             }
@@ -145,7 +160,7 @@ namespace BranchSelect.Controllers
                             {
                                 result = null;
                             }
-                                
+                            
                             studentChoices.Add(new StudentChoiceViewModel()
                             {
                                 Id = item.Id,
@@ -306,7 +321,7 @@ namespace BranchSelect.Controllers
                         {
                             dataStudent.Score = student.Score;
                             dataStudent.Class = student.Class;
-                            dataStudent.IsDeleted = student.IsDeleted;
+                            //dataStudent.IsDeleted = student.IsDeleted;
                         }
                         var dataStudentBranch = new StudentBranch();
                         dataStudentBranch.StudentId = dataStudent.Id;

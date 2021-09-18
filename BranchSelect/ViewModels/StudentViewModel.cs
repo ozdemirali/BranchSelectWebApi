@@ -11,12 +11,12 @@ namespace BranchSelect.ViewModels
         public String NameAndSurname { get; set; }
         public byte FirstSelect { get; set; }
         public byte SecondSelect { get; set; }
+        public String Choice { get; set; }
         public String ParentNameAndSurname { get; set; }
         public String Class { get; set; }
         public String Address { get; set; }
         public String Phone { get; set; }
         public String Email { get; set; }
         public float Score { get; set; }
-        public Boolean IsDeleted { get; set; }
     }
 }
