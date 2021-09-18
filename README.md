@@ -50,13 +50,13 @@ Two method is user for this controller. You can test on Postman above
 Two method is user for this controller. You can test on Postman above
 
 * First Method
-![SchoolGet](https://user-images.githubusercontent.com/20681737/132139376-eb5ce104-c71b-4438-8ac7-37e9ae248876.PNG
+![SchoolGet](https://user-images.githubusercontent.com/20681737/132139376-eb5ce104-c71b-4438-8ac7-37e9ae248876.PNG)
  
  * Second Method
 ![SchoolPostHeader](https://user-images.githubusercontent.com/20681737/126375232-cac37953-b31a-422d-bd3f-359b93857c1f.PNG)
 ![SchoolPostBody](https://user-images.githubusercontent.com/20681737/132139382-12a806a8-4926-42f1-8ec5-d8404da2f114.PNG)
 
-* Thirs Method
+* Third Method
 ![SchoolGetRole](https://user-images.githubusercontent.com/20681737/131574067-7d995f0b-0ca1-4e91-afea-2744a049c75f.PNG)
 
 * Fourth Method
@@ -72,7 +72,7 @@ Excel File should be like above.  Column Name can be different.
 Five method is user for this controller. You can test on Postman above
 
 * First Method
- ![GetId](https://user-images.githubusercontent.com/20681737/126375229-f576cd48-3cfb-4828-b8d3-63d064a39597.PNG)
+![GetId](https://user-images.githubusercontent.com/20681737/133906903-91c5a2c6-0e34-420f-872c-b1e6354d9d2b.PNG)
  
  * Second Method
 ![GetAll](https://user-images.githubusercontent.com/20681737/126375247-c649cc8f-d237-4d85-abb4-259a6337c6c7.PNG)
