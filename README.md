@@ -72,7 +72,7 @@ Excel File should be like above.  Column Name can be different.
 Five method is user for this controller. You can test on Postman above
 
 * First Method
-![GetId](https://user-images.githubusercontent.com/20681737/133896940-1d510276-4bd3-4382-a6a2-4a82a7a748bc.PNG)
+![GetId](https://user-images.githubusercontent.com/20681737/133898607-e50b4e2a-5bb6-4067-994e-842149ee0ca7.PNG)
  
  * Second Method
 ![GetAll](https://user-images.githubusercontent.com/20681737/126375247-c649cc8f-d237-4d85-abb4-259a6337c6c7.PNG)
