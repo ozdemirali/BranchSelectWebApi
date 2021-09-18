@@ -50,7 +50,7 @@ Two method is user for this controller. You can test on Postman above
 Two method is user for this controller. You can test on Postman above
 
 * First Method
-![SchoolGet](https://user-images.githubusercontent.com/20681737/132139376-eb5ce104-c71b-4438-8ac7-37e9ae248876.PNG
+![SchoolGet](https://user-images.githubusercontent.com/20681737/132139376-eb5ce104-c71b-4438-8ac7-37e9ae248876.PNG)
  
  * Second Method
 ![SchoolPostHeader](https://user-images.githubusercontent.com/20681737/126375232-cac37953-b31a-422d-bd3f-359b93857c1f.PNG)
