@@ -122,6 +122,106 @@ namespace BranchSelect.Controllers
 
                     //var branches = db.Branches.ToList();
                     var data = (from s in db.Students
+                                select new
+                                {
+                                    Id = s.Id,
+                                    NameAndSurname = s.NameAndSurname,
+                                    ParentNameAndSurname=s.ParentNameAndSurname,
+                                    Class=s.Class,
+                                    Address=s.Address,
+                                    Phone=s.Phone,
+                                    Email=s.Email,
+                                    Score = s.Score,
+                                    IsDeleted = s.IsDeleted
+                                }).Where(s => s.IsDeleted == false).ToList();
+
+                    List<StudentChoiceViewModel> studentChoices = new List<StudentChoiceViewModel>();
+                    List<StudentViewModel> students = new List<StudentViewModel>();
+                   
+
+                    foreach (var item in data)
+                    {
+
+                        if (db.StudentBranches.Where(sb => sb.StudentId == item.Id).Count() > 0)
+                        {
+
+                            var studentBranch = (from sb in db.StudentBranches
+                                                 where sb.StudentId == item.Id
+                                                 select new
+                                                 {
+                                                     FirstSelect = sb.FirstSelect,
+                                                     SecondSelect = sb.SecondSelect,
+
+                                                 }).FirstOrDefault();
+
+                            students.Add(new StudentViewModel()
+                            {
+                                Id = item.Id,
+                                NameAndSurname = item.NameAndSurname,
+                                FirstSelect = studentBranch.FirstSelect,
+                                SecondSelect = studentBranch.SecondSelect,
+                                Choice = db.Branches.Where(b => b.Id == studentBranch.FirstSelect).FirstOrDefault().Name,
+                                ParentNameAndSurname = item.ParentNameAndSurname,
+                                Class = item.Class,
+                                Address = item.Address,
+                                Phone = item.Phone,
+                                Email = item.Email,
+                                Score = item.Score,
+
+                            });
+                        }
+                        else
+                        {
+                            students.Add(new StudentViewModel()
+                            {
+                                Id = item.Id,
+                                NameAndSurname = item.NameAndSurname,
+                               // FirstSelect = studentBranch.FirstSelect,
+                               //SecondSelect = studentBranch.SecondSelect,
+                               //Choice = db.Branches.Where(b => b.Id == studentBranch.FirstSelect).FirstOrDefault().Name,
+                                ParentNameAndSurname = item.ParentNameAndSurname,
+                                Class = item.Class,
+                                Address = item.Address,
+                                Phone = item.Phone,
+                                Email = item.Email,
+                                Score = item.Score,
+                            });
+                        }
+                    }
+                    return Ok(students.OrderBy(ord => ord.NameAndSurname).ThenBy(thn => thn.Score));
+                }
+            }
+            catch (Exception e)
+            {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
+
+                return Ok(e.Message);
+            }
+        }
+
+
+        /// <summary>
+        ///This method fetches all students'infromation.  
+        /// </summary>
+        /// <returns>This information contains Id,NameAndSurname,FirstChoice and Score</returns>
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("api/student/GetResult")]
+        public IHttpActionResult GetResult()
+        {
+            try
+            {
+                using (db = new BranchSelectDbContext())
+                {
+
+                    //var branches = db.Branches.ToList();
+                    var data = (from s in db.Students
                                           select new
                                           {
                                               Id=s.Id,
@@ -297,6 +397,8 @@ namespace BranchSelect.Controllers
         /// <returns></returns>
         
         [Authorize(Roles = "Admin,User")]
+        [HttpPost]
+        [Route("api/student/Post")]
         public IHttpActionResult Post(StudentViewModel student)
         {
             try
