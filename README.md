@@ -44,7 +44,7 @@ Two method is user for this controller. You can test on Postman above
 ![GetBranch](https://user-images.githubusercontent.com/20681737/126376219-3a51ea81-aa4c-471f-8d7a-0daa40795bda.PNG)
 
 * Second Method
-![CrateClasses](https://user-images.githubusercontent.com/20681737/126376222-31390129-e055-4c8e-8f8c-d718edb16f41.PNG)
+![CrateClasses](https://user-images.githubusercontent.com/20681737/134074167-5eac32d9-4385-4a0b-b9aa-3473dc27bc03.PNG)
 
 ### SchoolController
 Two method is user for this controller. You can test on Postman above
