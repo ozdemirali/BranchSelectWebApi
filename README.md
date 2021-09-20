@@ -86,10 +86,13 @@ Five method is user for this controller. You can test on Postman above
 * Fifth Method
 ![GetBranchStatus](https://user-images.githubusercontent.com/20681737/132063579-c7e5ecd6-b2ec-4395-842d-b44ada4e505d.PNG)
 
-
 * Sixth Method
 ![StudentPostHeader](https://user-images.githubusercontent.com/20681737/130363038-51f4202c-3685-427c-8bd9-db52c4532a18.PNG)
 ![StudentPostBody](https://user-images.githubusercontent.com/20681737/130363041-6b74ccfc-1b3b-4b1f-8c70-51cab6df70cd.PNG)
+
+* Seventh
+![StudentDelete](https://user-images.githubusercontent.com/20681737/134060814-860d8ea3-0212-44cd-9bf8-5a23ada3ae10.PNG)
+
 
 
 
