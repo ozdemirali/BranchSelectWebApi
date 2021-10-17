@@ -464,5 +464,40 @@ namespace BranchSelect.Controllers
             
           
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        [Route("api/student/Delete")]
+        public IHttpActionResult Delete(String id)
+        {
+            try
+            {
+                using (db = new BranchSelectDbContext())
+                {
+                    var student = db.Students.Find(id);
+                    student.IsDeleted = true;
+
+                    if (db.StudentBranches.Where(sb => sb.StudentId == id).Count() > 0)
+                    {
+                        var studentBranch = db.StudentBranches.Find(id);
+                        db.StudentBranches.Remove(studentBranch);
+                    }
+                    db.SaveChanges();
+                    return Ok("Ok");
+                }
+
+            }
+            catch (Exception e)
+            {
+                using (var db = new BranchSelectDbContext())
+                {
+                    var error = new Error();
+                    error.Message = e.Message;
+                    db.Errors.Add(error);
+                    db.SaveChanges();
+                }
+                return Ok(e.Message);
+            }
+        }
     }
 }

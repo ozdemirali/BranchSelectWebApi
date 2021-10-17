@@ -131,7 +131,7 @@ namespace BranchSelect.Controllers
                         data.ForEach(r => r.Result = 2);
                         db.SaveChanges();
                     }
-                    return Ok();
+                    return Ok("Ok");
                 }
             }
             catch (Exception e)

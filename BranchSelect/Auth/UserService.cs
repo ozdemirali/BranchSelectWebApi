@@ -29,11 +29,27 @@ namespace BranchSelect.Auth
                                 Role = r.Name
                             }).FirstOrDefault();
 
+                //var isDeleted = db.Students.Find(data.UserId).IsDeleted; 
+
                 if (data != null)
                 {
-                    user = new UserViewModel();
-                    user.UserId = data.UserId;
-                    user.Role = data.Role;
+                    if (data.Role == "Admin")
+                    {
+                        user = new UserViewModel();
+                        user.UserId = data.UserId;
+                        user.Role = data.Role;
+                    }
+                    else
+                    {
+                        if (db.Students.Find(data.UserId).IsDeleted == false)
+                        {
+                            user = new UserViewModel();
+                            user.UserId = data.UserId;
+                            user.Role = data.Role;
+                        }
+
+                    }
+                    
                 }
 
                 return user;
